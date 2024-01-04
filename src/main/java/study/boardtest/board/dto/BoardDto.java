@@ -1,15 +1,18 @@
 package study.boardtest.board.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.Data;
-import lombok.Getter;
-import org.antlr.v4.runtime.misc.NotNull;
+import lombok.*;
+import study.boardtest.board.entity.Board;
 import study.boardtest.board.entity.BoardCategories;
 
-import java.time.LocalDateTime;
 
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardDto {
+
+    private Long id;
 
     private String title;
 
@@ -23,5 +26,14 @@ public class BoardDto {
         this.title = title;
         this.name = name;
         this.categories = categories;
+    }
+
+    public Board toEntity(){
+        return Board.builder()
+                .id(id)
+                .title(title)
+                .name(name)
+                .categories(categories)
+                .build();
     }
 }
