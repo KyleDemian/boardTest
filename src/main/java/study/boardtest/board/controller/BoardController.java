@@ -54,8 +54,10 @@ public class BoardController {
     @PostMapping("/board/{id}/update")
     public ResponseEntity<BoardDto> createPost(@PathVariable int id, @RequestBody BoardDto board) {
 
-        // 변경감지.. 동일하게.. 근데 같은걸 줘도 되려나?
-        BoardDto saveBoard = boardService.saveBoard(board);
+        // 변경감지.. 그럼 상세를 1회 조회를 하고, 해당 조회한 값을 persistEntity로만 호출 하면 자동 변경되겠네
+        Optional<BoardDto> boardDetail = boardService.findById(id);
+
+        BoardDto saveBoard = boardService.saveBoard(board.toEntity().toResponseDto());
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("{id}")
