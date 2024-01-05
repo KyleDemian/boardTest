@@ -51,6 +51,20 @@ public class BoardController {
         return ResponseEntity.created(location).build();
     }
 
+    @PostMapping("/board/{id}/update")
+    public ResponseEntity<BoardDto> createPost(@PathVariable int id, @RequestBody BoardDto board) {
+
+        // 변경감지.. 동일하게.. 근데 같은걸 줘도 되려나?
+        BoardDto saveBoard = boardService.saveBoard(board);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("{id}")
+                .buildAndExpand(saveBoard.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
     @DeleteMapping("/board/{id}")
     public ResponseEntity deleteBoard(@PathVariable long id) {
         boardService.deleteById(id);
