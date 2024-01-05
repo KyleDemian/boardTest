@@ -13,7 +13,6 @@ import study.boardtest.board.entity.BoardCategories;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardDto {
 
-    @Nullable
     private Long id;
 
     private String title;
@@ -21,6 +20,7 @@ public class BoardDto {
     private String name;
 
     private BoardCategories categories;
+
 
     // https://9hyuk9.tistory.com/85
     @QueryProjection

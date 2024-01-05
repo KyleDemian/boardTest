@@ -5,14 +5,15 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import study.boardtest.board.dto.BoardDto;
 import study.boardtest.common.BaseEntity;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Builder
-@AllArgsConstructor
+//@Builder
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseEntity {
 

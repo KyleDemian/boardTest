@@ -26,6 +26,7 @@ public class BoardController {
     * */
     @GetMapping("/board/list")
     public Page<BoardDto> boardList(BoardDto condition, Pageable pageable) {
+        // 왜 Id
         return boardService.getBoardList(condition, pageable);
     }
 

@@ -32,6 +32,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     public Page<BoardDto> search(BoardDto condition, Pageable pageable) {
         List<BoardDto> contents = queryFactory
                 .select(new QBoardDto(
+                    //board.id
                     board.title,
                     board.name,
                     board.categories

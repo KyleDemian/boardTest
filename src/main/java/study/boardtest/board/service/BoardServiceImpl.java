@@ -36,7 +36,7 @@ public class BoardServiceImpl implements BoardService{
 //        detail.stream()
 //                .
 
-        return Optional.empty();
+        return Optional.ofNullable(detail.get().toResponseDto());
     }
 
     @Override
