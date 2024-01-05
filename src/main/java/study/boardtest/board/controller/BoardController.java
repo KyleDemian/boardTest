@@ -6,10 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import study.boardtest.board.dto.BoardDto;
 import study.boardtest.board.service.BoardService;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -23,21 +25,31 @@ public class BoardController {
     * List & Search
     * */
     @GetMapping("/board/list")
-    public Page<BoardDto> list(BoardDto condition, Pageable pageable) {
+    public Page<BoardDto> boardList(BoardDto condition, Pageable pageable) {
         return boardService.getBoardList(condition, pageable);
     }
 
     @GetMapping("/board/{id}")
-    public ResponseEntity list(@PathVariable long id) {
+    public ResponseEntity boardDetail(@PathVariable long id) {
         Optional<BoardDto> board = boardService.findById(id);
         if (!board.isPresent()) {
-
+            throw new IllegalArgumentException("해당 게시물은 없음.");
         }
 
         return ResponseEntity.ok(board);
     }
 
     @PostMapping("/board")
+    public ResponseEntity<BoardDto> createBoard(@RequestBody BoardDto board) {
+        BoardDto saveBoard = boardService.saveBoard(board);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("{id}")
+                .buildAndExpand(saveBoard.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
 
     @DeleteMapping("/board/{id}")
     public ResponseEntity deleteBoard(@PathVariable long id) {

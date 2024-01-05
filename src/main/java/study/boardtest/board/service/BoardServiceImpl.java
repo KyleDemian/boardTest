@@ -38,4 +38,10 @@ public class BoardServiceImpl implements BoardService{
 
         return Optional.empty();
     }
+
+    @Override
+    public BoardDto saveBoard(BoardDto board) {
+        boardRepository.save(board.toEntity());
+        return board;
+    }
 }

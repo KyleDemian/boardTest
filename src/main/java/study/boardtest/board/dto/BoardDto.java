@@ -1,6 +1,7 @@
 package study.boardtest.board.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
+import jakarta.annotation.Nullable;
 import lombok.*;
 import study.boardtest.board.entity.Board;
 import study.boardtest.board.entity.BoardCategories;
@@ -12,6 +13,7 @@ import study.boardtest.board.entity.BoardCategories;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardDto {
 
+    @Nullable
     private Long id;
 
     private String title;
@@ -30,7 +32,7 @@ public class BoardDto {
 
     public Board toEntity(){
         return Board.builder()
-                .id(id)
+//                .id(id)
                 .title(title)
                 .name(name)
                 .categories(categories)

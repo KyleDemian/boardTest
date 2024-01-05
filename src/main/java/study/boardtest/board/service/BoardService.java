@@ -12,4 +12,6 @@ public interface BoardService {
     void deleteById(Long id);
 
     Optional<BoardDto> findById(long id);
+
+    BoardDto saveBoard(BoardDto board);
 }

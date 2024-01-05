@@ -10,9 +10,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Getter
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
-public class BaseEntity {
+@MappedSuperclass   // 아래의 컬럼들을 자동으로 컬럼으로 인식함.
+@EntityListeners(AuditingEntityListener.class)  // Auditing 자동으로 값 매핑 기능 추가
+public abstract class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
