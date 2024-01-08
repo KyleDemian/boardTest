@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import study.boardtest.board.dto.BoardDto;
 import study.boardtest.board.entity.Board;
@@ -21,44 +22,40 @@ public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
 
     @Override
+    @Transactional
+    public Long saveBoard(BoardDto boardDto) {
+        Board board = boardDto.toEntity();
+        boardRepository.save(board);
+        return board.getId();
+    }
+
+    @Override
+    @Transactional
+    public void updateBoard(long id, BoardDto boardDto) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 글 없음 id = " + id));
+        board.update(boardDto.getTitle(), boardDto.getName());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public BoardDto findById(long id) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글 없음 Id= + id"));
+        return new BoardDto(board);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Page<BoardDto> getBoardList(BoardDto condition, Pageable pageable) {
-
-
         return boardRepository.search(condition, pageable);
-//        return new Result<List<Page<BoardDto>>>(condition, pageable);
-    }
-
-    @Getter
-    @Setter
-    private static class Result<T>{
-        private T data;
-        private int count;
-
-        public Result(T data, int count) {
-            this.data = data;
-            this.count = count;
-        }
     }
 
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
-        Optional<Board> findBoard = boardRepository.findById(id);
-        if (findBoard.isPresent()) {
-            boardRepository.deleteById(id);
-        }
+        Board board = boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재 하지 않음. id = " +  id));
+        boardRepository.delete(board);
+        // boardRepository.deleteById(id);
     }
 
-    @Override
-    public Optional<BoardDto> findById(long id) {
-        Optional<Board> detail = boardRepository.findById(id);
-
-        return Optional.ofNullable(detail.get().toResponseDto());
-    }
-
-    @Override
-    public BoardDto saveBoard(BoardDto board) {
-        boardRepository.save(board.toEntity());
-        return board;
-    }
 }

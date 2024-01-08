@@ -11,7 +11,9 @@ public interface BoardService {
 
     void deleteById(Long id);
 
-    Optional<BoardDto> findById(long id);
+    BoardDto findById(long id);
 
-    BoardDto saveBoard(BoardDto board);
+    void updateBoard(long id, BoardDto boardDto);
+
+    Object saveBoard(BoardDto boardDto);
 }
