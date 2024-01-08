@@ -17,7 +17,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends BaseEntity {
 
-    @Id @Column(name = "board_id")
+    @Id
+    @Column(name = "board_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
@@ -28,7 +29,7 @@ public class Board extends BaseEntity {
 
     // https://jjunn93.com/entry/JPA-entity-DTO-%EB%B3%80%ED%99%98
     // https://lealea.tistory.com/248
-    public BoardDto toResponseDto(){
+    public BoardDto toResponseDto() {
         return BoardDto.builder()
                 .id(id)
                 .title(title)
