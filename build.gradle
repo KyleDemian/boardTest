@@ -43,8 +43,8 @@ dependencies {
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
-    // 스프링 회원 가입도 추가한다면?
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // 스프링 회원 가입도 추가한다면? - board 용이니까 주석
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {
