@@ -10,7 +10,7 @@ import study.boardtest.common.BaseEntity;
 
 @Getter
 @Builder
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardDto{
 
@@ -25,7 +25,8 @@ public class BoardDto{
 
     // https://9hyuk9.tistory.com/85
     @QueryProjection
-    public BoardDto( String title, String name, BoardCategories categories) {
+    public BoardDto(Long id, String title, String name, BoardCategories categories) {
+        this.id = id;
         this.title = title;
         this.name = name;
         this.categories = categories;
