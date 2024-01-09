@@ -29,8 +29,6 @@ public class Board extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private BoardCategories categories;
 
-
-
     public void update(String title, String name) {
         this.title = title;
         this.name = name;
