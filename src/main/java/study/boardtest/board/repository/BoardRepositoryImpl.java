@@ -41,7 +41,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
                 .where(
                         titleEq(condition.getTitle())
                         ,nameEq(condition.getName())
-//                        ,categoriesEq(condition.getCategories())
+                        ,categoriesEq(condition.getCategories())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -58,7 +58,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     private BooleanExpression categoriesEq(BoardCategories categories) {
-        return StringUtils.hasText(categories.toString()) ? board.categories.eq(categories) : null;
+        return StringUtils.hasText(categories.getBoardName()) ? board.categories.eq(BoardCategories.valueOf(categories.getBoardName())) : null;
     }
 
     private BooleanExpression nameEq(String name) {
