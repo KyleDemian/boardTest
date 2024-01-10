@@ -1,10 +1,12 @@
 package study.boardtest.board.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
 
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 @Getter
@@ -23,7 +25,7 @@ public enum BoardCategories {
 
 // https://green-bin.tistory.com/90
     // Json데이터를 역직렬화 하는 과정을 수동 설정하는 것
-//    @JsonCreator
+    @JsonCreator
     public static BoardCategories parsing(String value) {
         if (StringUtils.isEmpty(value)) {
             return null;

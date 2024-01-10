@@ -3,6 +3,7 @@ package study.boardtest.board.repository;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -32,16 +33,16 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     public Page<BoardDto> search(BoardDto condition, Pageable pageable) {
         List<BoardDto> contents = queryFactory
                 .select(new QBoardDto(
-                    board.id,
-                    board.title,
-                    board.name,
-                    board.categories
+                        board.id,
+                        board.title,
+                        board.name,
+                        board.categories
                 ))
                 .from(board)
                 .where(
                         titleEq(condition.getTitle())
-                        ,nameEq(condition.getName())
-                        ,categoriesEq(condition.getCategories())
+                        , nameEq(condition.getName())
+                        , categoriesEq(condition.getCategories())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -58,7 +59,27 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     private BooleanExpression categoriesEq(BoardCategories categories) {
-        return StringUtils.hasText(categories.getBoardName()) ? board.categories.eq(BoardCategories.valueOf(categories.getBoardName())) : null;
+        if (categories == null) {
+            return null;
+        }
+
+        switch (categories) {
+            case Spring -> {
+                return board.categories.eq(BoardCategories.valueOf("Spring"));
+            }
+            case Summer -> {
+                return board.categories.eq(BoardCategories.valueOf("Summer"));
+            }
+            case Autumn -> {
+                return board.categories.eq(BoardCategories.valueOf("Autumn"));
+            }
+            case Winter -> {
+                return board.categories.eq(BoardCategories.valueOf("Winter"));
+            }
+            default -> {
+                return null;
+            }
+        }
     }
 
     private BooleanExpression nameEq(String name) {
