@@ -26,7 +26,8 @@ public class Board extends BaseEntity {
     @Column(length = 50, nullable = false)
     private String name;
 
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = BoardCategoriesConverter.class)
+//    @Enumerated(EnumType.STRING)
     private BoardCategories categories;
 
     public void update(String title, String name) {
